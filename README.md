@@ -45,12 +45,9 @@ Below is a reminder of the steps we took to get to the code found in this repo:
    We created a `"start"` script in `package.json` to make it easier to run our application:
 
    ```json
-   ...
    "scripts": {
-     "start": "node src/server.js",
-     ...
+     "start": "node src/server.js"
    }
-   ...
    ```
 
    We then split our sandwich endpoints into their own router using `express.Router()`. We moved all of that logic into a new file `./src/routes/sandwiches.js`. We then registered that router in `server.js` using:
