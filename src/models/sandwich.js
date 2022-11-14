@@ -1,3 +1,6 @@
+import { response } from 'express';
+import mongoose from 'mongoose';
+
 // This is normally stored in a database
 let sandwiches = [
   {
@@ -20,21 +23,27 @@ let sandwiches = [
   },
 ];
 
-export function listAllSandwiches() {
+const sandwichSchema = new mongoose.Schema({
+  name: String,
+  breadType: String,
+  ingredients: [String],
+});
+
+const Sandwich = mongoose.model('Sandwich', sandwichSchema);
+
+export async function listAllSandwiches() {
+  const sandwiches = Sandwich.find();
   return sandwiches;
 }
 
-export function createSandwich(sandwich) {
-  sandwiches.push(sandwich);
+export async function createSandwich(sandwich) {
+  await Sandwich.create(sandwich);
 }
 
-export function updateSandwich(id, sandwich) {
-  const existingSandwich = sandwiches.find((s) => s.id === id);
-
-  Object.assign(existingSandwich, sandwich);
+export async function updateSandwich(id, sandwich) {
+  await Sandwich.findByIdAndUpdate(id, sandwich);
 }
 
-export function deleteSandwich(id) {
-  sandwiches = sandwiches.filter((s) => s.id !== id);
-  console.log(sandwiches);
+export async function deleteSandwich(id) {
+  await Sandwich.findByIdAndDelete(id);
 }

@@ -9,35 +9,36 @@ import {
 export const sandwichesRouter = express.Router();
 
 // List all sandwiches
-sandwichesRouter.get('/', (request, response) => {
-  const sandwiches = listAllSandwiches();
+sandwichesRouter.get('/', async (request, response) => {
+  const sandwiches = await listAllSandwiches();
+
   response.send(sandwiches);
 });
 
 // Create a new sandwich
-sandwichesRouter.post('/', (request, response) => {
+sandwichesRouter.post('/', async (request, response) => {
   const sandwich = request.body;
 
-  createSandwich(sandwich);
+  await createSandwich(sandwich);
 
   response.send();
 });
 
 // Update a sandwich
-sandwichesRouter.patch('/:id', (request, response) => {
-  const sandwichId = Number(request.params.id);
+sandwichesRouter.patch('/:id', async (request, response) => {
+  const sandwichId = request.params.id;
   const sandwich = request.body;
 
-  updateSandwich(sandwichId, sandwich);
+  await updateSandwich(sandwichId, sandwich);
 
   response.send();
 });
 
 // Delete a sandwich
-sandwichesRouter.delete('/:id', (request, response) => {
-  const sandwichId = Number(request.params.id);
+sandwichesRouter.delete('/:id', async (request, response) => {
+  const sandwichId = request.params.id;
 
-  deleteSandwich(sandwichId);
+  await deleteSandwich(sandwichId);
 
   response.send();
 });
